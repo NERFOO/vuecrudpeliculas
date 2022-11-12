@@ -13,6 +13,17 @@ export default class ServicesPeliculas {
         })
     }
 
+    getPeliculas() {
+        return new Promise(function (resolve) {
+            var request = "/api/Peliculas/";
+            var url = Global.urlPeliculas + request;
+
+            axios.get(url).then( res => {
+                resolve(res.data);
+            })
+        })
+    }
+
     getNacionalidades() {
         return new Promise(function (resolve) {
             var request = "/api/Nacionalidades/";
@@ -24,7 +35,7 @@ export default class ServicesPeliculas {
         })
     }
 
-    getPeliculas(genNac, id) {
+    getPeliculasGenNac(genNac, id) {
         return new Promise(function (resolve) {
             var request = `/api/peliculas/peliculas${genNac}/${id}`;
             var url = Global.urlPeliculas + request;

@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div class="card" style="width: 18rem;">
-            <img :src="this.pelicula.foto" class="card-img-top" alt="foto" style="width:70%; height: 250px;">
+        <div v-if="!pelicula">
+            <img src="./../assets/images/loading.gif" alt="cargando" style="width:100%">
+        </div>
+        <div class="card" style="width: 18rem;" v-else>
+            <img :src="pelicula.foto" class="card-img-top" alt="foto" style="width:70%; height: 250px;">
             <div class="card-body">
-                <h5 class="card-title">{{this.pelicula.titulo}}</h5>
-                <p class="card-text">{{this.pelicula.argumento}}</p>
-                <a :href="this.pelicula.enlaceVideo" target="_blank" class="btn btn-primary">YouTube</a>
-                <router-link :to="`/peliculas/${this.genNac}/${this.pelicula.idGenero}`" class="btn btn-success">Volver</router-link>
+                <h5 class="card-title">{{pelicula.titulo}}</h5>
+                <p class="card-text">{{pelicula.argumento}}</p>
+                <a :href="pelicula.enlaceVideo" target="_blank" class="btn btn-primary">YouTube</a>
+                <router-link :to="`/peliculas/${genNac}/${pelicula.idGenero}`" class="btn btn-success">Volver</router-link>
             </div>
         </div>
     </div>
@@ -20,7 +23,7 @@ export default {
     name : "DetallesPelicula" ,
     data() {
         return{
-            pelicula : {} ,
+            pelicula : null ,
             id : 0 ,
             genNac : ""
         }

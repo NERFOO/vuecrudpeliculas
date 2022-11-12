@@ -20,7 +20,7 @@
                     <td><img :src="pel.foto" alt="imagen" style="width:100px"></td>
                     <td>
                         <router-link :to="`/detalles/${this.genNac}/${pel.idPelicula}`" class="btn btn-success">Detalles</router-link>
-                        <router-link to="#" class="btn btn-info">Modificar</router-link>
+                        <router-link :to="`/update/${this.genNac}/${pel.idPelicula}/`" class="btn btn-info">Modificar</router-link>
                         <router-link to="#" class="btn btn-danger">Eliminar</router-link>
                     </td>
                 </tr>
@@ -47,7 +47,7 @@ export default {
         cargarPeliculas() {
             this.idGenNac = this.$route.params.id;
 
-            service.getPeliculas(this.genNac, this.idGenNac).then( res => {
+            service.getPeliculasGenNac(this.genNac, this.idGenNac).then( res => {
                 this.peliculas = res;
             })
         }
