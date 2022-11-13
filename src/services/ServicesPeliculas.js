@@ -69,10 +69,13 @@ export default class ServicesPeliculas {
     }
 
     deletePelicula(id) {
-        return new Promise(function () {
-            //var request = "/api/peliculas/" + id;
-            //var url = Global.urlPeliculas + request;
-            console.log(id)
+        return new Promise(function (resolve) {
+            var request = "/api/peliculas/" + id;
+            var url = Global.urlPeliculas + request;
+
+            axios.delete(url).then( res => {
+                resolve(res);
+            })
         })
     }
 

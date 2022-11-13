@@ -15,7 +15,6 @@
             <br/>
             <button class="btn btn-success">Realizar cambio</button>
         </form>
-    <h1>{{this.idPelicula}} y {{this.idGenero}}</h1>
     </div>
 </template>
 

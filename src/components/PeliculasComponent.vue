@@ -7,25 +7,25 @@
         </div>
         <div v-else>
             <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>NOMBRE</th>
-                    <th>IMAGEN</th>
-                    <th>OPCIONES</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="pel in peliculas" :key="pel.idPelicula">
-                    <td>{{pel.titulo}}</td>
-                    <td><img :src="pel.foto" alt="imagen" style="width:100px"></td>
-                    <td>
-                        <router-link :to="`/detalles/${this.genNac}/${pel.idPelicula}`" class="btn btn-success">Detalles</router-link>
-                        <router-link :to="`/update/`" class="btn btn-info">Modificar</router-link>
-                        <button @click="eliminarPelicula(pel.idPelicula)" class="btn btn-danger">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th>NOMBRE</th>
+                        <th>IMAGEN</th>
+                        <th>OPCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="pel in peliculas" :key="pel.idPelicula">
+                        <td>{{pel.titulo}}</td>
+                        <td><img :src="pel.foto" alt="imagen" style="width:100px"></td>
+                        <td>
+                            <router-link :to="`/detalles/${this.genNac}/${pel.idPelicula}`" class="btn btn-success">Detalles</router-link>
+                            <router-link :to="`/update/`" class="btn btn-info">Modificar</router-link>
+                            <button type="submit" v-on:click="eliminarPelicula(pel.idPelicula)" class="btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -34,7 +34,7 @@
 import ServicesPeliculas from './../services/ServicesPeliculas';
 const service = new ServicesPeliculas();
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default {
     name : "PeliculasComponent" ,
@@ -54,8 +54,32 @@ export default {
             })
         },
 
+        // eliminarPelicula(id) {
+        //     Swal.fire({
+        //         title: '¿Estás seguro?',
+        //         text: "No se podrán deshacer los cambios",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Si, eliminar'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             Swal.fire(
+        //                 'Eliminado!',
+        //                 'La película ha sido eliminada',
+        //                 'success'
+        //             )
+        //             service.deletePelicula(id).then( () => {
+        //                 location.reload();
+        //             })
+        //         }
+        //     })
+        // }
+
         eliminarPelicula(id) {
-            Swal.fire({
+            service.deletePelicula(id).then( () => {
+                Swal.fire({
                     title: '¿Estás seguro?',
                     text: "No se podrán deshacer los cambios",
                     icon: 'warning',
@@ -68,12 +92,11 @@ export default {
                         Swal.fire(
                             'Eliminado!',
                             'La película ha sido eliminada',
-                            'success',
-                            service.deletePelicula(id).then( () => {
-                                this.$router.push(`/peliculas/`)
-                            })
+                            'success'
                         )
                     }
+                    location.reload();
+                })
             })
         }
     },

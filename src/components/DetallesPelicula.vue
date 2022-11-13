@@ -3,8 +3,8 @@
         <div v-if="!pelicula">
             <img src="./../assets/images/loading.gif" alt="cargando" style="width:100%">
         </div>
-        <div class="card" style="width: 18rem;" v-else>
-            <img :src="pelicula.foto" class="card-img-top" alt="foto" style="width:70%; height: 250px;">
+        <div class="card" style="width: 50%; margin: auto" v-else>
+            <img :src="pelicula.foto" class="card-img-top" alt="foto" style="width:70%; height: 250px; margin: auto">
             <div class="card-body">
                 <h5 class="card-title">{{pelicula.titulo}}</h5>
                 <p class="card-text">{{pelicula.argumento}}</p>
