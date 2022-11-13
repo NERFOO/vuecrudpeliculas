@@ -2,15 +2,20 @@
     <div>
         <h1>Update component</h1>
 
-        <label>Selecciona una pelicula</label>
-        <select class="form-select" v-model="pelicula">
-            <option v-for="pel in peliculas" :key="pel" :value="pel.nombre">{{pel.titulo}}</option>
-        </select>
+        <form v-on:submit.prevent="updatePelicula()">
+            <label>Selecciona una pelicula</label>
+            <select class="form-select" v-model="idPelicula">
+                <option v-for="pel in peliculas" :key="pel" :value="pel.idPelicula">{{pel.titulo}}</option>
+            </select>
 
-        <label>Selecciona un genero</label>
-        <select class="form-select">
-            <option v-for="gen in generos" :key="gen">{{gen.nombre}}</option>
-        </select>
+            <label>Selecciona un genero</label>
+            <select class="form-select" v-model="idGenero">
+                <option v-for="gen in generos" :key="gen" :value="gen.idGenero">{{gen.nombre}}</option>
+            </select>
+            <br/>
+            <button class="btn btn-success">Realizar cambio</button>
+        </form>
+    <h1>{{this.idPelicula}} y {{this.idGenero}}</h1>
     </div>
 </template>
 
@@ -24,8 +29,8 @@ export default {
         return{
             peliculas : [] ,
             generos : [] ,
-            pelicula : "" ,
-            genero : ""
+            idPelicula : 0 ,
+            idGenero : 0
         }
     },
     mounted() {
@@ -35,6 +40,13 @@ export default {
         service.getGeneros().then( res => {
             this.generos = res;
         });
+    },
+    methods : {
+        updatePelicula() {
+            service.putPelicula(this.idPelicula, this.idGenero).then( () => {
+                this.$router.push(`/peliculas/Genero/${this.idGenero}`);
+            })
+        }
     }
 
 }

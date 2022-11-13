@@ -20,8 +20,8 @@
                     <td><img :src="pel.foto" alt="imagen" style="width:100px"></td>
                     <td>
                         <router-link :to="`/detalles/${this.genNac}/${pel.idPelicula}`" class="btn btn-success">Detalles</router-link>
-                        <router-link :to="`/update/${this.genNac}/${pel.idPelicula}/`" class="btn btn-info">Modificar</router-link>
-                        <router-link to="#" class="btn btn-danger">Eliminar</router-link>
+                        <router-link :to="`/update/`" class="btn btn-info">Modificar</router-link>
+                        <button @click="eliminarPelicula(pel.idPelicula)" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -33,6 +33,8 @@
 <script>
 import ServicesPeliculas from './../services/ServicesPeliculas';
 const service = new ServicesPeliculas();
+
+import Swal from 'sweetalert2'
 
 export default {
     name : "PeliculasComponent" ,
@@ -49,6 +51,29 @@ export default {
 
             service.getPeliculasGenNac(this.genNac, this.idGenNac).then( res => {
                 this.peliculas = res;
+            })
+        },
+
+        eliminarPelicula(id) {
+            Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "No se podrán deshacer los cambios",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Eliminado!',
+                            'La película ha sido eliminada',
+                            'success',
+                            service.deletePelicula(id).then( () => {
+                                this.$router.push(`/peliculas/`)
+                            })
+                        )
+                    }
             })
         }
     },

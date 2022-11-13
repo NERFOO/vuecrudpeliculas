@@ -56,4 +56,23 @@ export default class ServicesPeliculas {
             })
         })
     }
+
+    putPelicula(idPeli, idGen) {
+        return new Promise(function (resolve) {
+            var request = `/api/peliculas/UpdatePeliculaGenero/${idPeli}/${idGen}`;
+            var url = Global.urlPeliculas + request;
+
+            axios.put(url).then( res => {
+                resolve(res);
+            })
+        })
+    }
+
+    deletePelicula(id) {
+        return new Promise(function () {
+            //var request = "/api/peliculas/" + id;
+            //var url = Global.urlPeliculas + request;
+            console.log(id)
+        })
+    }
 }
