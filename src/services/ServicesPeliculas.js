@@ -75,4 +75,15 @@ export default class ServicesPeliculas {
             console.log(id)
         })
     }
+
+    filtroPelicula(titulo) {
+        return new Promise(function (resolve) {
+            var request = `/api/peliculas/PeliculasTitulo/${titulo}/`;
+            var url = Global.urlPeliculas + request;
+
+            axios.put(url).then( res => {
+                resolve(res);
+            })
+        })
+    }
 }

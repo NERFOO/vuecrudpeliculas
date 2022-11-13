@@ -29,8 +29,8 @@
                     </li>
                 </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Titulo" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                <input class="form-control me-2" type="search" placeholder="Titulo" aria-label="Search" v-model="nomPelicula" v-on:keyup="filtrar">
+                <button class="btn btn-outline-success" v-on:click="filtrar" type="button">Buscar</button>
             </form>
             </div>
         </div>
@@ -47,6 +47,9 @@ export default {
         return{
             generos : [] ,
             nacionalidades : [] ,
+            nomPelicula : "" ,
+            titulos : [] ,
+            peliculas : []
         }
     },
     mounted() {
@@ -57,6 +60,30 @@ export default {
         service.getNacionalidades().then( res => {
             this.nacionalidades = res;
         })
+
+        service.getPeliculas().then( res => {
+            for( var i = 0; i < res.length; i++) {
+                this.titulos = res[i].titulo.toLowerCase();
+            }
+        })
+    },
+    methods : {
+        // filtrarPelicula() {
+        //     service.getPeliculas().then( res => {
+        //         for( var i = 0; i < res.length; i++) {
+        //             this.titulos = res[i].titulo.toLowerCase();
+
+        //             if(this.titulos.toLowerCase() == `${this.nomPelicula.toLowerCase()}`) {
+        //                 this.peliculas = res[i];
+        //                 console.log(this.peliculas)
+        //             }
+        //         }
+        //     })
+        // },
+        // filtrar(titulos) {
+        //     console.log()
+        //     return titulos.name.toLocaleLowerCase().indexOf(this.nomPelicula.toLowerCase())
+        // }
     }
 }
 </script>
